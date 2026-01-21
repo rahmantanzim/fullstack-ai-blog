@@ -12,10 +12,11 @@ app.use(cors())// allows data communication between frontend and backend
 app.use(express.json()) // converts req.body from json to js object
 
 //routes
+app.use('/api/admin', adminRouter)
 app.get('/', (req,res)=>{
     res.send('api is working well')
 })
-app.use('/api/admin', adminRouter)
+
 
 const PORT = process.env.PORT || 3000
 
