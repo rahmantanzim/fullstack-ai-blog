@@ -3,9 +3,15 @@ import 'dotenv/config'
 import cors from 'cors'
 import connectDB from './configs/db.js';
 import adminRouter from './routes/adminRoutes.js';
+import blogRouter from './routes/blogRouter.js';
 const app = express();// creates the server named app
 
-await connectDB()
+try {
+    await connectDB();
+} catch (error) {
+    console.error("Server startup aborted due to database connection error.");
+    process.exit(1);
+}
 //middlewares
 
 app.use(cors())// allows data communication between frontend and backend
@@ -13,6 +19,7 @@ app.use(express.json()) // converts req.body from json to js object
 
 //routes
 app.use('/api/admin', adminRouter)
+app.use('/api/blog', blogRouter)
 app.get('/', (req,res)=>{
     res.send('api is working well')
 })

@@ -2,17 +2,19 @@ import 'dotenv/config'
 import mongoose from "mongoose";
 const connectDB = async ()=>{
     try{
-        console.log("HIIIII", process.env.MONGODB_URI);
-        mongoose.connection.on('connected', ()=>{ //this is an event listener
-            console.log('Database Connected')
+        if (!process.env.MONGODB_URI) {
+            throw new Error("MONGODB_URI is missing in .env");
+        }
 
-        }) // this does not do anything perticular, just notifies when connection is made.
-        await mongoose.connect(`${process.env.MONGODB_URI}/MERNBlog`) // this is the actual connection proccess
-        
+        mongoose.connection.on('connected', ()=>{
+            console.log('Database connected');
+        });
 
+        await mongoose.connect(`${process.env.MONGODB_URI}/MERNBlog`);
     }
     catch(err){
-        console.log(err.message)
+        console.error("MongoDB connection failed:", err.message);
+        throw err;
     }
 }
 
