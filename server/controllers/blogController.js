@@ -1,6 +1,7 @@
 import fs from 'fs'
 import imageKit from '../configs/imageKit.js';
 import { Blog } from '../models/Blog.js';
+import Comment from '../models/Comment.js';
  export const addBlog = async (req, res) => {
     try {
         const { title, subtitle, description, category, isPublished } = JSON.parse(req.body.blog)
@@ -91,4 +92,17 @@ export const togglePublish = async (req,res)=>{
     }
 }
 
-//now we need to create apir endpoint in route.js
+//now we need to create api endpoint in route.js
+
+// Comment
+
+export const addComment = async (req,res)=>{
+    try{
+    const {blog,name,content} = req.body;
+    await Comment.create({blog,name,content})
+    res.json({sucess: true, message: 'Comment added for review'})
+    }
+    catch(e){
+        res.json({success: false, message: `Error found fetching the comments: ${e.message}`})
+    }
+}
