@@ -71,6 +71,7 @@ export const deleteBlogById = async (req,res)=>{
     try{
         const {id} = req.body
         const blog = await blog.findByIdAndDelete(id)
+        await Comment.deleteMany({blog:id})
         res.json({success:true, message: "blog deleted successfully"})
     }
     catch(e){
@@ -101,6 +102,16 @@ export const addComment = async (req,res)=>{
     const {blog,name,content} = req.body;
     await Comment.create({blog,name,content})
     res.json({sucess: true, message: 'Comment added for review'})
+    }
+    catch(e){
+        res.json({success: false, message: `Error found adding the comments: ${e.message}`})
+    }
+}
+export const getBlogComments = async(req,res)=>{
+    try{
+        const {blogId} = req.body;
+        const comments = (await Comment.find({blog: blogId, isApproved:true})).sort({createdAt: -1})
+        res.json({sucess: true, comments})
     }
     catch(e){
         res.json({success: false, message: `Error found fetching the comments: ${e.message}`})
