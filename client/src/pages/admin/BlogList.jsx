@@ -3,7 +3,7 @@ import { blog_data } from '../../assets/assets'
 import BlogTableItem from '../../components/admin/BlogTableItem'
 
 const BlogList = () => {
-  const [blog,setBlog] = useState();
+  const [blog,setBlog] = useState([]);
   const fetchBlogs = async()=>{
     setBlog(blog_data)
   }

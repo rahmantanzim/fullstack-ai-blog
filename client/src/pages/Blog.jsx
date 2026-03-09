@@ -22,7 +22,6 @@ const Blog = () => {
     fetchBlogData()
   }, [])
 
-  console.log("Hello: ",blogData)
   return (
     <>
       <Navbar />
