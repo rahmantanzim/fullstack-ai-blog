@@ -7,12 +7,14 @@ import Dashboard from './pages/admin/Dashboard'
 import AddBlog from './pages/admin/AddBlog'
 import BlogList from './pages/admin/BlogList'
 import 'quill/dist/quill.snow.css'
+import Toast from 'react-hot-toast'
 
 import Comments from './pages/admin/Comments'
 import Login from './components/admin/Login'
 const App = () => {
   return (
     <>
+      <Toast></Toast>
       <Routes>
         <Route path='/' element={<Home/>} />
         {/* <Route path='/blog' element={<Blog/>} /> */}
