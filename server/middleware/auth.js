@@ -6,7 +6,7 @@ const auth = (req,res,next)=>{
         next()
     }
     catch(error){
-        res.josn({success: false, message: error})
+        res.json({success: false, message: 'Invalid token'})
     }
 }
 

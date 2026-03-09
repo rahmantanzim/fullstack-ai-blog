@@ -5,33 +5,33 @@ import { Blog } from '../models/Blog.js';
     try {
         const { title, subtitle, description, category, isPublished } = JSON.parse(req.body.blog)
         const imageFile = req.file;
-        // console.log('Image file: ',imageFile)
+        console.log('Image file: ',imageFile)
         if (!title || !subtitle || !description || !category || !imageFile) {
-            return res.json({ success: false, message: 'Missing requied fields' })
+            return res.json({ success: false, message: 'Missing required fields' })
         }
         //Image upload with imageKit
-        const fileBuffer = fs.readFileSync()
+        const fileBuffer = fs.createReadStream(imageFile.path)
         const response = await imageKit.files.upload({ 
-            file: fs.createReadStream(imageFile.path), 
+            file: fileBuffer, 
             fileName: imageFile.originalname,
             folder: '/blogs',
         });
         // Image optimization with imagekit transformation
         const optimizedImageURL = imageKit.helper.buildSrc({
             urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-            src: response.filepath,
+            src: response.filePath,
             transformation: [
                 {
                     width: 400,
                     height: 300,
-                    crop: 'maintain_ratio',
                     quality: 80,
                     format: 'webp',
                 },
             ],
         }); 
         const image = optimizedImageURL;
-        Blog.create({title,subtitle,description,category,image,isPublished})
+        await Blog.create({title,subtitle,description,category,image,isPublished});
+        fs.unlinkSync(imageFile.path);
         res.json({success:true, message: 'Blog added successfully'})
     }
     catch (error) {
@@ -55,7 +55,7 @@ export const getAllBlogs = async (req,res)=>{
 export const getBlogById = async (req,res)=>{
     try{
         const {blogId} = req.params
-        const blog = await blog.findById(blogId)
+        const blog = await Blog.findById(blogId)
         if(!blog){
             return res.json({success: false, message: 'blog not found'})
         }
@@ -77,9 +77,9 @@ export const deleteBlogById = async (req,res)=>{
     }
 }
 
-export const togglePublish = async ()=>{
+export const togglePublish = async (req,res)=>{
     try{
-        const id = req.body({id});
+        const {id} = req.body;
         const blog = await Blog.findById(id);
         blog.isPublished = !blog.isPublished;
         await blog.save()
