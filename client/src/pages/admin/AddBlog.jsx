@@ -1,69 +1,145 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { assets, blogCategories } from '../../assets/assets'
-import Quill from 'quill'
+import React, { useEffect, useRef, useState } from 'react';
+import { assets, blogCategories } from '../../assets/assets';
+import Quill from 'quill';
 
 const AddBlog = () => {
-  const editorRef = useRef(null)
-  const quillRef = useRef(null)
-  const [image, setimage] = useState(false)
-  const [title, setTitle] = useState('')
-  const [subtitle, setSubtitle] = useState('')
-  const [category, setCategory] = useState('')
-  const [isPublished, setIsPublished] = useState(false)
-  const onSubmitHandler = (e) => {
-    e.preventDefault()
-  }
-  const generateAIContent = async () => {
+  const editorRef = useRef(null);
+  const quillRef = useRef(null);
+  
+  // Initialized to null instead of false for file objects
+  const [image, setImage] = useState(null); 
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [isPublished, setIsPublished] = useState(false);
 
-  }
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    // Ready for form data extraction and backend submission
+  };
+
+  const generateAIContent = async () => {
+    // Placeholder for your backend API call
+  };
+
   useEffect(() => {
     if (!quillRef.current && editorRef.current) {
-      quillRef.current = new Quill(editorRef.current, { theme: 'snow' })
+      quillRef.current = new Quill(editorRef.current, { theme: 'snow' });
     }
-  }, [])
+  }, []);
+
   return (
-    <>
-    
-    <form onSubmit={onSubmitHandler} className='flex-1 bg-blue-50/50 text-gray-600 h-full overflow-scroll'>
-      <h2 className='text-3xl font-bold px-4 sm:m-10'>Add a new post</h2>
-      <div className="bg-white w-full max-w-3xl p-4 md:p-10 sm:m-10 shadow rounded">
-        <p>Upload thumbnail</p>
-        <label htmlFor="image">
-          <img src={!image ? assets.upload_area : URL.createObjectURL(image)} alt="upload" className='mt-2 h-16 rounded cursor-pointer' />
-          <input type="file" id='image' hidden required onChange={(e) => setimage(e.target.files[0])} />
-        </label>
-
-        <p className='mt-2'>Blog Title</p>
-        <input className='w-full max-w-lg mt-2 p-2 border border-gray-300 outline-none rounded' type="text" placeholder='type here' name='title' id='title' value={title} onChange={(e) => setTitle(e.target.value)} />
-
-        <p className='mt-2'>Blog Subtitle</p>
-        <input className='w-full max-w-lg mt-2 p-2 border border-gray-300 outline-none rounded' type="text" placeholder='type here' name='subtitle' id='title' value={subtitle} onChange={(e) => setTitle(e.target.value)} />
-
-        <p className='mt-2'>Blog Content</p>
-        <div className="max-w-lg h-74 pb-16 sm:pb-10 pt-2 relative">
-          <div ref={editorRef} ></div>
-          <button type="button" className='absolute bottom-1 right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5 rounded hover:underline cursor-pointer' onClick={generateAIContent} >Generate with AI</button>
+    <form onSubmit={onSubmitHandler} className='flex-1 bg-blue-50/50 text-gray-800 h-full overflow-y-auto p-4 sm:p-10'>
+      
+      {/* Wrapped the form content in a card-like container with flex-col for consistent spacing */}
+      <div className="w-full max-w-3xl bg-white p-6 md:p-10 shadow-sm rounded-lg border border-gray-100 flex flex-col gap-6">
+        
+        <div>
+          <h2 className='text-3xl font-bold text-gray-900 mb-2'>Add a new post</h2>
         </div>
 
-        <p className='mt-2'>Blog Category</p>
-        <select onChange={(e) => { setCategory(e.target.value) }} name="category" id="category" className='px-3 py-2 mt-2 border text-gray-500 border-gray-300 outline-none rounded'>
-          <option value="">Select Category</option>
-          {blogCategories.map((item, index) => {
-            return <option key={index} value={item}>{item}</option>
-          })}
-        </select>
-
-        <div className='mt-4 flex gap-2 '>
-          <p className='m-0 p-0'>Publish Now</p>
-          <input type="checkbox" checked={isPublished} className='scale-125 cursor-pointer'onChange={(e)=>{setIsPublished(!isPublished)}} />
+        {/* Thumbnail Upload */}
+        <div className="flex flex-col gap-2">
+          <p className="font-medium">Upload thumbnail</p>
+          <label htmlFor="image" className="w-max">
+            <img 
+              src={image ? URL.createObjectURL(image) : assets.upload_area} 
+              alt="upload preview" 
+              className='h-16 object-cover rounded cursor-pointer border border-gray-200 hover:opacity-80 transition-opacity' 
+            />
+            <input type="file" id='image' hidden required onChange={(e) => setImage(e.target.files[0])} />
+          </label>
         </div>
 
-        <button type="submit" className='mt-8 w-40 h-10 bg-primary text-white rounded curosr-pointer'>Add Blog</button>
+        {/* Title */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="title" className="font-medium">Blog Title</label>
+          <input 
+            id='title' 
+            name='title' 
+            type="text" 
+            placeholder='Type here' 
+            className='w-full max-w-lg p-2 border border-gray-300 outline-none rounded focus:border-primary transition-colors' 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)} 
+          />
+        </div>
+
+        {/* Subtitle */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="subtitle" className="font-medium">Blog Subtitle</label>
+          <input 
+            id='subtitle' 
+            name='subtitle' 
+            type="text" 
+            placeholder='Type here' 
+            className='w-full max-w-lg p-2 border border-gray-300 outline-none rounded focus:border-primary transition-colors' 
+            value={subtitle} 
+            // BUG FIX: This was previously calling setTitle(e.target.value)
+            onChange={(e) => setSubtitle(e.target.value)} 
+          />
+        </div>
+
+        {/* Rich Text Content */}
+        <div className="flex flex-col gap-2">
+          <p className="font-medium">Blog Content</p>
+          <div className="max-w-lg relative pb-14">
+            {/* Added min-height so the editor doesn't collapse when empty */}
+            <div ref={editorRef} className="min-h-[200px] bg-white"></div>
+            
+            <button 
+              type="button" 
+              className='absolute bottom-0 right-0 text-xs font-medium text-white bg-gray-900 hover:bg-black px-4 py-2 rounded shadow-sm transition-colors cursor-pointer z-10' 
+              onClick={generateAIContent} 
+            >
+              Generate with AI
+            </button>
+          </div>
+        </div>
+
+        {/* Category */}
+        <div className="flex flex-col gap-2">
+          <label htmlFor="category" className="font-medium">Blog Category</label>
+          <select 
+            id="category" 
+            name="category" 
+            className='w-full max-w-lg px-3 py-2 border border-gray-300 text-gray-600 outline-none rounded focus:border-primary transition-colors'
+            value={category}
+            onChange={(e) => setCategory(e.target.value)} 
+          >
+            {/* Added a disabled default option so users are forced to choose */}
+            <option value="" disabled>Select Category</option>
+            {blogCategories.map((item, index) => (
+              <option key={index} value={item}>{item}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Publish Toggle */}
+        <div className='flex items-center gap-3 mt-2'>
+          <input 
+            type="checkbox" 
+            id="isPublished"
+            checked={isPublished} 
+            // Swapped scale-125 for standardized w-5 h-5 sizing
+            className='w-5 h-5 cursor-pointer accent-primary'
+            onChange={() => setIsPublished(!isPublished)} 
+          />
+          <label htmlFor="isPublished" className='cursor-pointer select-none font-medium'>Publish Now</label>
+        </div>
+
+        {/* Submit */}
+        <button 
+          type="submit" 
+          // Fixed 'curosr-pointer' typo
+          className='mt-4 w-40 h-10 bg-primary hover:bg-primary/90 text-white font-medium rounded cursor-pointer transition-colors shadow-sm'
+        >
+          Add Blog
+        </button>
 
       </div>
     </form>
-    </>
-  )
-}
+  );
+};
 
-export default AddBlog
+export default AddBlog;
