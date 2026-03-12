@@ -22,7 +22,10 @@ const AddBlog = () => {
     }
   }, [])
   return (
+    <>
+    
     <form onSubmit={onSubmitHandler} className='flex-1 bg-blue-50/50 text-gray-600 h-full overflow-scroll'>
+      <h2 className='text-3xl font-bold px-4 sm:m-10'>Add a new post</h2>
       <div className="bg-white w-full max-w-3xl p-4 md:p-10 sm:m-10 shadow rounded">
         <p>Upload thumbnail</p>
         <label htmlFor="image">
@@ -59,6 +62,7 @@ const AddBlog = () => {
 
       </div>
     </form>
+    </>
   )
 }
 

@@ -13,7 +13,7 @@ const BlogList = () => {
   return (
     <div className='p-6 flex flex-col gap-10'>
       <div className="list-of-blogs">
-        <h2 className='text-3xl text-bold mb-6'>Recent Blogs</h2>
+        <h2 className='text-3xl text-bold mb-6'>All Blogs</h2>
         <div className="overflow-x-auto">
           <table className="table table-zebra">
             {/* head */}
