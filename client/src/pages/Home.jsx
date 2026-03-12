@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import Header from '../components/Home/Header'
 import BlogList from '../components/Home/BlogList'
 import Newsletter from '../components/Newsletter'
+import Footer from '../components/Footer'
 const Home = () => {
     const [current, setCurrent] = useState('all')
     return (
@@ -11,6 +12,7 @@ const Home = () => {
             <Header />
             <BlogList current={current} setCurrent={setCurrent}/>
             <Newsletter/>
+            <Footer/>
         </>
     )
 }

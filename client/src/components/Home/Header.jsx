@@ -9,7 +9,7 @@ const Header = () => {
                     </div>
                     <div className="main-text">
                         <h2 className='text-6xl font-bold my-10'>A blogging platform with <span className='text-primary'>MERN</span> Stack</h2>
-                        <p className='text-[20px] px-6 py-3 mx-auto mb-10 bg-opacity-80 '>Lorem ipsum dolor sit amet <br /> consectetur adipisicing elit. Voluptate ab tempore aliquid, nemo nisi sequi vel reprehenderit atque necessitatibus explicabo, repudiandae deserunt nobis. <br /> Magnam aspernatur quae placeat sequi omnis cupiditate?</p>
+                        <p className='text-sm px-6 py-3 mx-auto mb-10 bg-opacity-80 '>Lorem ipsum dolor sit amet <br /> consectetur adipisicing elit. Voluptate ab tempore aliquid, nemo nisi sequi vel reprehenderit atque necessitatibus explicabo, repudiandae deserunt nobis. <br /> Magnam aspernatur quae placeat sequi omnis cupiditate?</p>
                     </div>
                     <div className="search-form">
                         <form className='flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden'>

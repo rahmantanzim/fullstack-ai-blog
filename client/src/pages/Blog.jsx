@@ -6,7 +6,7 @@ import BlogSingle from '../components/BlogSingle'
 
 const Blog = () => {
   const { id } = useParams()
-  const [blogData, setBlogData] = useState(null)
+  const [blogData, setBlogData] = useState([])
   console.log("id: ",id)
   console.log("blog data from asset: ",blog_data)
 
