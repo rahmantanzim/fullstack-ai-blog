@@ -1,1 +1,1 @@
-export const categories = ['all','react.js', 'typescript','wordpress','php','MERN'];
+export const categories = ['all','React.js', 'Typescript','Wordpress','Php','MERN'];

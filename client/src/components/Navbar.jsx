@@ -27,7 +27,7 @@ const Navbar = () => {
     <a onClick={()=>{navigate('/')}} className="btn btn-ghost text-xl tracking-wide">MERN BLOG</a>
   </div>
   <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1">
+    <ul className="menu menu-horizontal px-1 text-lg uppercase">
       <li><a onClick={()=>{navigate('/')}}>Home</a></li>
       {/* <li>
         <details>
@@ -42,7 +42,7 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <button className="btn btn-primary mr-5"> Login </button>
+    <button className="btn btn-primary mr-5" onClick={()=>{navigate('/login')}}> Login </button>
   </div>
 </div>
   )
