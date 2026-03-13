@@ -12,7 +12,6 @@ const Home = () => {
             <Header />
             <BlogList current={current} setCurrent={setCurrent}/>
             <Newsletter/>
-            <Footer/>
         </>
     )
 }

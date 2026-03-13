@@ -1,3 +1,5 @@
+import AllComments from "../components/comments/AllComments";
+import AddCommentForm from "./comments/AddCommentForm";
 const BlogSingle = ({ data }) => {
   if (!data) return null;
 
@@ -48,73 +50,13 @@ const BlogSingle = ({ data }) => {
         <hr className="my-10 border-gray-200" />
 
         {/* Comment Section */}
-        <section>
-          <h3 className="text-xl font-semibold mb-6">Comments</h3>
+        <AllComments/>
+        <AddCommentForm/>
 
-          {/* Comment Form */}
-          <form className="mb-8">
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Name
-              </label>
-              <input
-                type="text"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-gray-300"
-                placeholder="Your name"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-1">
-                Comment
-              </label>
-              <textarea
-                rows={4}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-gray-300"
-                placeholder="Write your comment..."
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="bg-gray-900 text-white px-5 py-2 rounded-lg hover:bg-gray-800 transition"
-            >
-              Post Comment
-            </button>
-          </form>
-
-          {/* Comment List */}
-          <div className="space-y-6">
-            {[
-              {
-                name: "John Doe",
-                time: "2 days ago",
-                text: "This post is really inspiring. Thanks for sharing your journey!"
-              },
-              {
-                name: "Sarah",
-                time: "1 day ago",
-                text: "Consistency really is the key. Needed this reminder."
-              }
-            ].map((comment, index) => (
-              <div
-                key={index}
-                className="border border-gray-200 rounded-lg p-4"
-              >
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-medium">{comment.name}</span>
-                  <span className="text-xs text-gray-500">
-                    {comment.time}
-                  </span>
-                </div>
-                <p className="text-gray-700">{comment.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
 
       </div>
     </div>
+    
   );
 };
 

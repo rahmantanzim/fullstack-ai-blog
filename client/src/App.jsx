@@ -11,6 +11,8 @@ import 'quill/dist/quill.snow.css'
 import { Toaster } from 'react-hot-toast'
 import Comments from './pages/admin/Comments'
 import Login from './components/admin/Login'
+import Footer from './components/Footer';
+
 import { useAppContext } from './context/AppContext'
 const App = () => {
   const {token} = useAppContext();
@@ -30,6 +32,7 @@ const App = () => {
           <Route path='comments' element={<Comments/>}/>
         </Route>
       </Routes>
+      <Footer/>
     </>
   )
 }
