@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Navbar from "../Navbar";
+import { useAppContext } from "../../context/AppContext";
 const Login = () => {
+    const {axios,setToken,navigate} = useAppContext();
     const [email,setEmail] = useState()
     const [password,setPassword] = useState()
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert(email)
         // handle login logic here
     };
     return (

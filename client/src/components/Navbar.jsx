@@ -1,8 +1,7 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
-    const navigate = useNavigate()
+  const {navigate,token} = useAppContext()
   return (
     <div className="navbar bg-base-100 shadow-sm">
   <div className="navbar-start">
@@ -24,25 +23,18 @@ const Navbar = () => {
         <li><a>Item 3</a></li>
       </ul>
     </div>
-    <a onClick={()=>{navigate('/')}} className="btn btn-ghost text-xl tracking-wide">MERN BLOG</a>
+    <a onClick={()=>{navigate('/')}} className="btn btn-ghost text-xl tracking-wide">NeuralNote</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 text-lg uppercase">
       <li><a onClick={()=>{navigate('/')}}>Home</a></li>
-      {/* <li>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2 bg-base-100 w-40 z-1">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </details>
-      </li> */}
+  
       <li><a onClick={()=>{navigate('/blog')}}>Blog</a></li>
+      <li><a onClick={()=>{navigate('/admin')}}>Admin</a></li>
     </ul>
   </div>
   <div className="navbar-end">
-    <button className="btn btn-primary mr-5" onClick={()=>{navigate('/login')}}> Login </button>
+    <button className="btn btn-primary mr-5" onClick={()=>{navigate('/login')}}> {token ? 'Dashboard' : 'Login' } </button>
   </div>
 </div>
   )
