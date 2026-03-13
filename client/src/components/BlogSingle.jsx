@@ -32,14 +32,9 @@ const BlogSingle = ({ data }) => {
 
           {/* Tags */}
           <div className="mt-4 flex flex-wrap gap-2">
-            {["Web Development", "JavaScript", "Career"].map(tag => (
-              <span
-                key={tag}
-                className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs"
-              >
-                {tag}
+              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">
+                {data.category}
               </span>
-            ))}
           </div>
         </header>
 

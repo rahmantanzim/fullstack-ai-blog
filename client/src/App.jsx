@@ -9,11 +9,11 @@ import BlogList from './pages/admin/BlogList'
 import AllBlogs from './pages/AllBlogs'
 import 'quill/dist/quill.snow.css'
 import { Toaster } from 'react-hot-toast'
-import { useContext } from 'react'
 import Comments from './pages/admin/Comments'
 import Login from './components/admin/Login'
+import { useAppContext } from './context/AppContext'
 const App = () => {
-  const {token} = useContext(AppContext);
+  const {token} = useAppContext();
   return (
     <>
       <Toaster></Toaster>
