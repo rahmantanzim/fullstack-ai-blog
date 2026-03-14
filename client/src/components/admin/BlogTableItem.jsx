@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import toast from 'react-hot-toast'
+import {toast} from 'react-hot-toast'
  
 const BlogTableItem = ({ bt_data, index, axios, fetchBlogs }) => {
     
@@ -8,7 +8,6 @@ const BlogTableItem = ({ bt_data, index, axios, fetchBlogs }) => {
     const [is_Published,setIs_published] = useState(isPublished)
     //handle delete fucntion:
     const deleteBlog = async()=>{
-        console.log('Clicked delete button1')
         const confirmed = window.confirm('Are you sure you want to delete this blog?');
         if(!confirmed) return;
         try{
@@ -28,7 +27,22 @@ const BlogTableItem = ({ bt_data, index, axios, fetchBlogs }) => {
     }
     //handle publish/unpublish function:
     const togglePublish = async()=>{
-    
+        const confirmed = window.confirm(`Are you sure you want to procced?`);
+        if(!confirmed) return;  
+        try{
+            const {data} = await axios.post('/api/blog/toggle-publish',{id:bt_data._id})
+            if(data.success){
+                toast.success(data.message);
+                setIs_published(!is_Published);
+                await fetchBlogs();
+            }   
+            else{
+                toast.error(data.message)
+            }
+        }
+        catch(error){
+            toast.error('Failed to toggle publish status')
+        }   
     }
     return (
         <tr>

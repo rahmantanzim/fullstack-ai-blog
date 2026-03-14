@@ -9,7 +9,7 @@ const BlogList = () => {
   //fetch blogs from the server: 
   const fetchBlogs = async()=>{
     try{
-        const {data} = await axios.get('/api/blog/all')
+        const {data} = await axios.get('/api/admin/all-blogs')
         if(data.success){
           setBlogData(data.blogs)
         }
