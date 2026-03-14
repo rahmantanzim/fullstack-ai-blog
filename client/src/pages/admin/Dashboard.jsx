@@ -1,16 +1,36 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { dashboard_data, blog_data } from '../../assets/assets';
 import BlogTableItem from '../../components/admin/BlogTableItem';
+import toast from 'react-hot-toast';
+import { useAppContext } from '../../context/AppContext'; 
 
 const Dashboard = () => {
+  const {axios} = useAppContext();
   // Keeping state here is great for when you hook this up to fetch real data from your Node/Express backend later!
-  const [data, setData] = useState(dashboard_data);
+  const [data, setData] = useState([]);
 
+  const fetchDashboardData = async () => {
+    try{
+      const {data} = await axios.get('/api/admin/dashboard')
+      if(data.success){
+        setData(data.dashboardData)
+      }
+      else{
+        toast.error(data.message || "Failed to fetch dashboard data")
+      }
+    }
+    catch(e){
+      toast.error(e.message);  
+    }
+  }
+  useEffect(()=>{
+    fetchDashboardData();
+  },[])
   // Extracted the repetitive card data into an array
   const summaryCards = [
-    { label: 'Total Posts', value: data.blogs },
-    { label: 'Total Comments', value: data.comments },
-    { label: 'Drafts', value: data.drafts },
+    { label: 'Total Blogs', value: data?.number_of_blogs },
+    { label: 'Total Comments', value: data?.number_of_comments },
+    { label: 'Drafts', value: data?.drafts },
   ];
 
   return (
@@ -31,7 +51,7 @@ const Dashboard = () => {
 
       {/* Lower Section: Recent Blogs Table */}
       <div className="list-of-blogs">
-        <h2 className='text-3xl font-bold mb-6 text-gray-800'>Recent Blogs</h2>
+        <h2 className='text-3xl font-bold mb-6 text-gray-800'>Recent Blogs ({data.number_of_blogs})</h2>
         
         <div className="overflow-x-auto border border-gray-200 rounded-lg">
           <table className="table table-zebra w-full">
@@ -46,10 +66,10 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {blog_data.slice(0, 5).map((item, index) => (
+              {data.recentBlogs?.slice(0, 5).map((item, index) => (
                 <BlogTableItem 
                   // Bug fixed here: changed data._id to item._id
-                  key={item._id || index} 
+                  key={item._id} 
                   index={index + 1} 
                   bt_data={item} 
                 />
