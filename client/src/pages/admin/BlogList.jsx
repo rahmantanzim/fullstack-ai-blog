@@ -4,10 +4,22 @@ import BlogTableItem from '../../components/admin/BlogTableItem'
 import { useAppContext } from '../../context/AppContext'  
 
 const BlogList = () => {
-  const {axios,blogs} = useAppContext();
+  const {axios} = useAppContext();
   const [blogData,setBlogData] = useState([]);
+  //fetch blogs from the server: 
   const fetchBlogs = async()=>{
-    setBlogData(blogs)
+    try{
+        const {data} = await axios.get('/api/blog/all')
+        if(data.success){
+          setBlogData(data.blogs)
+        }
+        else{
+          toast.error(data.message) 
+        }
+    }
+    catch(e){
+        console.log('Error fetching blogs: ', e)
+    } 
   }
   useEffect(()=>{
     fetchBlogs()
@@ -31,7 +43,8 @@ const BlogList = () => {
             <tbody>
               {/* row 1 */}
               {blogData.map((item,index)=>{
-                return (<BlogTableItem index = {index+1} key={item._id} bt_data = {item}/>)
+                // console.log('Blog Items: ', item)
+                return (<BlogTableItem index = {index+1} key={item._id} bt_data = {item} fetchBlogs = {fetchBlogs} axios={axios}/>)
               })}
             </tbody>
           </table>
