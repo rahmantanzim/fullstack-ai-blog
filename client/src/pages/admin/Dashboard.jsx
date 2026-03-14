@@ -72,6 +72,8 @@ const Dashboard = () => {
                   key={item._id} 
                   index={index + 1} 
                   bt_data={item} 
+                  axios={axios}
+                  fetchBlogs={fetchDashboardData}
                 />
               ))}
             </tbody>
