@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { blog_data } from '../../assets/assets'
 import BlogTableItem from '../../components/admin/BlogTableItem'
+import { useAppContext } from '../../context/AppContext'  
 
 const BlogList = () => {
-  const [blog,setBlog] = useState([]);
+  const {axios,blogs} = useAppContext();
+  const [blogData,setBlogData] = useState([]);
   const fetchBlogs = async()=>{
-    setBlog(blog_data)
+    setBlogData(blogs)
   }
   useEffect(()=>{
     fetchBlogs()
@@ -28,7 +30,7 @@ const BlogList = () => {
             </thead>
             <tbody>
               {/* row 1 */}
-              {blog.map((item,index)=>{
+              {blogData.map((item,index)=>{
                 return (<BlogTableItem index = {index+1} key={item._id} bt_data = {item}/>)
               })}
             </tbody>

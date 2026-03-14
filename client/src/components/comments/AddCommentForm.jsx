@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-
-const AddCommentForm = () => {
+import React, { useState, useRef } from 'react';
+import { useAppContext } from '../../context/AppContext';
+import toast from 'react-hot-toast';
+const AddCommentForm = ({ blog }) => {
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
-
-  const handleSubmit = (e) => {
+  const { axios } = useAppContext();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // This is where you will eventually send the data to your backend
-    console.log("New Comment Data:", { name, comment });
-    
+    try {
+      const { data } = await axios.post('/api/blog/add-comments', { blog:blog._id, name:name, content: comment })
+      if (data.success) {
+        toast.success(data.message)
+      }
+      else {
+        toast.error(data.message)
+      }
+    }
+    catch(e) {
+      toast.error(`Error adding comment: ${e.message}`)
+    } 
+
     // Clear the form after submission
     setName('');
     setComment('');
@@ -18,7 +28,7 @@ const AddCommentForm = () => {
   return (
     <div className="max-w-2xl p-6 mt-8 bg-white border border-gray-100 shadow-sm rounded-xl">
       <h3 className="mb-4 text-lg font-bold text-gray-800">Leave a Comment</h3>
-      
+
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {/* Name Input */}
         <div>
@@ -26,10 +36,10 @@ const AddCommentForm = () => {
             Name
           </label>
           <input
-            type="text"
-            id="name"
+            onChange={(e)=>{setName(e.target.value)}}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            type="text"
+            id="name"          
             placeholder="Enter your name"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -42,10 +52,10 @@ const AddCommentForm = () => {
             Comment
           </label>
           <textarea
+            onChange={(e)=>{setComment(e.target.value)}}
+            value={comment}
             id="comment"
             rows="4"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
             placeholder="Write your comment here..."
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"

@@ -1,8 +1,5 @@
-import React from 'react'
 import { categories } from '../../assets/data'
-import { blog_data } from '../../assets/assets'
 import BlogCard from './BlogCard'
-import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../../context/AppContext'
 const BlogList = ({current,setCurrent}) => {
     const {blogs,input} = useAppContext();

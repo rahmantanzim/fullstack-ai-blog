@@ -10,8 +10,8 @@ blogRouter.get('/all', getAllBlogs)
 blogRouter.get('/:blogId', getBlogById)
 blogRouter.post('/delete',auth, deleteBlogById) // added auth middleware so that we can p[proetect the route
 blogRouter.post('/toggle-publish', auth,togglePublish)
-blogRouter.post('/add-comments', auth,addComment)
-blogRouter.get('/comments', auth,getBlogComments)
+blogRouter.post('/add-comments',addComment)
+blogRouter.post('/comments', getBlogComments)
 
 
 export default blogRouter;

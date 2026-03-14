@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
-const AllComments = () => {
-  const comments = [
-    {id: 1, name: 'Tanzim', comment: 'This is a sample comment to demonstrate the AllComments component. It can be replaced with actual comments from the database.'},
-    {id: 2, name: 'Maya', comment: 'This is a sample comment to demonstrate the AllComments component. It can be replaced with actual comments from the database.'},
-    {id: 3, name: 'Zahran', comment: 'This is a sample comment to demonstrate the AllComments component. It can be replaced with actual comments from the database.'}, 
-  ];
+const AllComments = ({data}) => {
+  const [comments, setComments] = React.useState([]);
+  const fetchComments = async()=>{
+    try{
+      const {data} = await axios.post('/api/blog/comments',{blogId: data._id})
+      if(data.success){
+        setComments(data.comments)
+      } 
+      else{
+        toast.error(data.message)
+      }
 
+    }
+    catch(e){
+      toast.error(data.message)
+    }
+  }
+  useEffect(()=>{
+    if(data?._id){
+      fetchComments();
+    }
+  },[])
   return (
     <div className="max-w-2xl  py-6 mt-8 bg-gray-50 rounded-xl">
       <h2 className="mb-6 text-xl font-bold text-gray-800 border-b pb-2">

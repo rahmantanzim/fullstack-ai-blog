@@ -6,7 +6,6 @@ import Comment from '../models/Comment.js';
     try {
         const { title, subtitle, description, category, isPublished } = JSON.parse(req.body.blog)
         const imageFile = req.file;
-        console.log('Image file: ',imageFile)
         if (!title || !subtitle || !description || !category || !imageFile) {
             return res.json({ success: false, message: 'Missing required fields' })
         }
@@ -101,7 +100,7 @@ export const addComment = async (req,res)=>{
     try{
     const {blog,name,content} = req.body;
     await Comment.create({blog,name,content})
-    res.json({sucess: true, message: 'Comment added for review'})
+    res.json({success: true, message: 'Comment added for review'})
     }
     catch(e){
         res.json({success: false, message: `Error found adding the comments: ${e.message}`})
