@@ -62,7 +62,7 @@ export const deleteCommmentById = async (req,res)=>{
         return res.json({success:true, message: "Comment deleted sucessfully"})
     }
     catch(e){
-        return res.json({ success: false, message: err.message })
+        return res.json({ success: false, message: err.message + 'Error' })
 
     }
 }

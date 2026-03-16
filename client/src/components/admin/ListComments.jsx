@@ -1,10 +1,8 @@
-import { useState } from "react";
 import toast from "react-hot-toast";
 
 const ListComments = ({ comment, axios ,fetchComments}) => {
 
   const approveHandler = async () => {
-
     try {
       const { data } = await axios.post('/api/admin/approve-comment', { id: comment._id })
       data.success ? toast.success(data.message) : toast.error(data.message || "Failed to update comment status");
@@ -13,6 +11,19 @@ const ListComments = ({ comment, axios ,fetchComments}) => {
     catch (error) {
       toast.error(error.message)
     }
+  }
+
+  const handleCommentDelete = async () => { 
+    if (!window.confirm("Are you sure you want to delete this comment?")) return; 
+    try{
+      const {data} = await axios.post('/api/admin/delete-comment', {id: comment._id})
+      data.success ? toast.success(data.message) : toast.error(data.message || "Failed to delete comment");
+      fetchComments();
+    }
+    catch(e){
+      toast.error('Error in FE:' + e.message );
+    }
+    
   }
 
   const badge = (status) => {
@@ -55,7 +66,7 @@ const ListComments = ({ comment, axios ,fetchComments}) => {
       </td>
       <td>
         <button disabled={comment.isApproved} onClick={approveHandler} className='btn btn-success'>{comment.isApproved ? 'Approved' : 'Approve'}</button>
-        <button className='btn bg-red-600 text-white cursor-pointer mx-1'>Delete</button>
+        <button onClick={handleCommentDelete} className='btn bg-red-600 text-white cursor-pointer mx-1'>Delete</button>
       </td>
       </tr>
 
