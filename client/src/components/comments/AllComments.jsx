@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import toast from 'react-hot-toast';
-
-const AllComments = ({data}) => {
+import { useAppContext } from '../../context/AppContext';
+const AllComments = ({b_data}) => {
+  const { axios } = useAppContext();  
   const [comments, setComments] = React.useState([]);
   const fetchComments = async()=>{
+   
     try{
-      const {data} = await axios.post('/api/blog/comments',{blogId: data._id})
+      const {data} = await axios.post('/api/blog/comments',{blogId: b_data._id})
       if(data.success){
         setComments(data.comments)
       } 
@@ -15,24 +17,23 @@ const AllComments = ({data}) => {
 
     }
     catch(e){
-      toast.error(data.message)
+      toast.error(e.message)
     }
   }
   useEffect(()=>{
-    if(data?._id){
       fetchComments();
-    }
   },[])
   return (
     <div className="max-w-2xl  py-6 mt-8 bg-gray-50 rounded-xl">
       <h2 className="mb-6 text-xl font-bold text-gray-800 border-b pb-2">
         Comments ({comments.length})
+        {console.log(comments)  }
       </h2>
       
       <div className="flex flex-col">
         {comments.map((item) => (
           <div 
-            key={item.id} 
+            key={item._id} 
             className="flex gap-4 p-4 mb-4 bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
           >
             {/* Avatar */}
@@ -46,7 +47,7 @@ const AllComments = ({data}) => {
             <div className="flex flex-col justify-center">
               <h4 className="text-sm font-bold text-gray-900">{item.name}</h4>
               <p className="mt-1 text-sm text-gray-700 leading-relaxed">
-                {item.comment}
+                {item.content}
               </p>
             </div>
             

@@ -12,15 +12,20 @@ const Header = () => {
         InputRef.current.value = '';
     }
   return (
-    <div className="slider h-[80vh] flex items-center justify-center bg-base-300">
+    <div className="slider h-[80vh] flex items-center justify-center bg-primary/10">
                 <div className="flex flex-col text-center">
                     <div className="upper-text">
-                        <p className='w-max mx-auto bg-orange-600 text-white px-6 py-2 rounded-lg'>AI Feature integrated</p>
+                        <p className='w-max mb-8 mx-auto bg-teal-600 text-white px-6 py-2 rounded-lg'>AI Feature integrated</p>
                     </div>
                     <div className="main-text">
-                        <h2 className='text-4xl font-bold my-10'>A blogging platform with <span className='text-primary'>MERN</span> Stack</h2>
-                        <p className='text-sm px-6 py-3 mx-auto mb-10 bg-opacity-80 '>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate ab tempore aliquid, nemo nisi sequi vel reprehenderit atque necessitatibus explicabo, repudiandae deserunt nobis. <br /> Magnam aspernatur quae placeat sequi omnis cupiditate?</p>
-                    </div>
+            <h2 className="text-5xl md:text-7xl font-extrabold text-base-content tracking-tight mb-6 leading-tight">
+                The Intelligent <span className="text-primary">MERN</span> Blogging Platform
+            </h2>
+            
+            <p className="text-lg md:text-xl text-base-content/70 max-w-2xl mx-auto leading-relaxed mb-10">
+                Publish faster and smarter. A full-stack blogging engine featuring an integrated AI writer, a robust admin dashboard, and a highly responsive Tailwind UI.
+            </p>
+        </div>
                     <div className="search-form">
                         <form onSubmit={submitHandler} className='flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden'>
                             <input ref={InputRef} required className=' text-gray-800 w-full pl-4 outline-none placeholder-gray-500' type='text' name='search' id='search' placeholder='Search blogs...' />

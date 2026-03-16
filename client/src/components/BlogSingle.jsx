@@ -50,8 +50,8 @@ const BlogSingle = ({ data }) => {
         <hr className="my-10 border-gray-200" />
 
         {/* Comment Section */}
-        <AllComments data={data}/>
-        <AddCommentForm blog={data}/>
+        <AllComments b_data={data}/>
+        <AddCommentForm blog={data} />
 
 
       </div>

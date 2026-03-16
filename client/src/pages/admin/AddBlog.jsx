@@ -5,7 +5,7 @@ import { useAppContext } from '../../context/AppContext';
 import { toast } from 'react-hot-toast';    
 
 const AddBlog = () => {
-  const { axios } = useAppContext();
+  const { axios,fetchBlogs } = useAppContext();
   const editorRef = useRef(null);
   const quillRef = useRef(null);
   const [isAdding, setIsAdding] = useState(false);
@@ -33,6 +33,8 @@ const AddBlog = () => {
         setSubtitle('');
         quillRef.current.root.innerHTML = '';
         setCategory('All');
+        await fetchBlogs(); // Refresh the blog list after adding a new blog
+
       }
       else {
         toast.error(data.message);

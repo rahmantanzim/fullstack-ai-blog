@@ -1,7 +1,19 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 
-const ListComments = ({comments}) => {
-  
+const ListComments = ({ comment, axios ,fetchComments}) => {
+
+  const approveHandler = async () => {
+
+    try {
+      const { data } = await axios.post('/api/admin/approve-comment', { id: comment._id })
+      data.success ? toast.success(data.message) : toast.error(data.message || "Failed to update comment status");
+      fetchComments();
+    }
+    catch (error) {
+      toast.error(error.message)
+    }
+  }
 
   const badge = (status) => {
     const base = "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium";
@@ -13,73 +25,44 @@ const ListComments = ({comments}) => {
   };
 
   return (
-    <div className="bg-white p-3">
-      {/* Header bar (like WP list header) */}
-      <div className="px-4 py-3 border-b flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Comments</h2>
-        <div className="text-sm text-gray-500">
-          Total: <span className="font-medium text-gray-800">{comments.length}</span>
-        </div>
-      </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-600">
-            <tr className="border-b">
-              <th className="text-left font-medium px-4 py-3 w-[28%]">Author</th>
-              <th className="text-left font-medium px-4 py-3">Comment</th>
-              <th className="text-left font-medium px-4 py-3 w-[20%]">Blog title</th>
-              <th className="text-left font-medium px-4 py-3 w-[18%]">Submitted On</th>
-              <th className="text-left font-medium px-4 py-3 w-[12%]">Status</th>
-            </tr>
-          </thead>
+    <>
+      {/* Author */}
+      <tr>
+      <td className="px-4 py-4 align-top">
+        <div className="font-medium text-gray-900">{comment.name}</div>
+      </td>
 
-          <tbody>
-            {comments.map((c) => (
-              <tr
-                key={c.id}
-                className="border-b hover:bg-gray-50 group"
-              >
-                {/* Author */}
-                <td className="px-4 py-4 align-top">
-                  <div className="font-medium text-gray-900">{c.name}</div>
-                </td>
+      {/* Comment + row actions */}
+      <td className="px-4 py-4 align-top">
+        <p className="text-gray-800">{comment.content}</p>
 
-                {/* Comment + row actions */}
-                <td className="px-4 py-4 align-top">
-                  <p className="text-gray-800">{c.content}</p>
+      </td>
 
-                </td>
+      {/* In response to */}
+      <td className="px-4 py-4 align-top text-gray-700">
+        <span className="text-gray-900">{comment.blog.title}</span>
+      </td>
 
-                {/* In response to */}
-                <td className="px-4 py-4 align-top text-gray-700">
-                  <span className="text-gray-900">{c.blog.title}</span>
-                </td>
+      {/* Date */}
+      <td className="px-4 py-4 align-top text-gray-700">
+        {new Date(comment.createdAt).toLocaleDateString()}
+      </td>
 
-                {/* Date */}
-                <td className="px-4 py-4 align-top text-gray-700">
-                  {c.createdAt}
-                </td>
+      {/* Status */}
+      <td className="px-4 py-4 align-top">
+        <span className={badge(comment.isApproved)}>{comment.isApproved ? 'Approved' : 'Not Approved'}</span>
+      </td>
+      <td>
+        <button disabled={comment.isApproved} onClick={approveHandler} className='btn btn-success'>{comment.isApproved ? 'Approved' : 'Approve'}</button>
+        <button className='btn bg-red-600 text-white cursor-pointer mx-1'>Delete</button>
+      </td>
+      </tr>
 
-                {/* Status */}
-                <td className="px-4 py-4 align-top">
-                  <span className={badge(c.isApproved)}>{c.isApproved ? 'Approved' : 'Not Approved'}</span>
-                </td>
-              </tr>
-            ))}
 
-            {comments.length === 0 && (
-              <tr>
-                <td colSpan={5} className="px-4 py-10 text-center text-gray-500">
-                  No comments found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+
+
+    </>
   );
 };
 

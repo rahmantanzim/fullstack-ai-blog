@@ -1,8 +1,11 @@
+
 import { categories } from '../../assets/data'
+
 import BlogCard from './BlogCard'
 import { useAppContext } from '../../context/AppContext'
 const BlogList = ({current,setCurrent}) => {
-    const {blogs,input} = useAppContext();
+    const {blogs,input,fetchBlogs} = useAppContext();
+    fetchBlogs(); 
     const filteredBlogs= ()=>{
         if(input.length === 0){
             return blogs;

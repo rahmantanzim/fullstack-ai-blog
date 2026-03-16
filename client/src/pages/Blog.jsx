@@ -7,20 +7,28 @@ import { useAppContext } from '../context/AppContext'
 import toast from 'react-hot-toast'
 const Blog = () => {
   const { id } = useParams()
-  const [blogData, setBlogData] = useState([])
+  const [blogData, setBlogData] = useState(null)
   const {axios} = useAppContext();
 
-  const fetchBlogData = async() => {
-    try{
-      const {data} = await axios.get(`api/blog/${id}`)
-      data.success ? setBlogData(data.blog) : toast.error(data.message);
-    }
-    catch(err){toast.error("Failed to fetch blog data")}
-      
-    }
   useEffect(() => {
+    if (!id) return;
+
+    const fetchBlogData = async () => {
+      try {
+        const { data } = await axios.get(`/api/blog/${id}`)
+        
+        if (data.success) {
+          setBlogData(data.blog)
+        } else {
+          toast.error(data.message)
+        }
+      } catch (err) {
+        toast.error("Failed to fetch blog data")
+      }
+    }
+
     fetchBlogData()
-  }, [])
+  }, [id, axios])
 
   return (
     <>

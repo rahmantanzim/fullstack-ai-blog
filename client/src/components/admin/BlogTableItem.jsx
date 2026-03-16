@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import {toast} from 'react-hot-toast'
- 
+import { useNavigate } from 'react-router-dom'
+
 const BlogTableItem = ({ bt_data, index, axios, fetchBlogs }) => {
-    
-    const { title, createdAt, isPublished } = bt_data
+    const navigate = useNavigate();
+    const { _id,title, createdAt, isPublished } = bt_data
     const blog_date = new Date(createdAt)
     const [is_Published,setIs_published] = useState(isPublished)
     //handle delete fucntion:
@@ -47,7 +48,7 @@ const BlogTableItem = ({ bt_data, index, axios, fetchBlogs }) => {
     return (
         <tr>
             <th>{index}</th>
-            <td>{title}</td>
+            <td className='capitalize cursor-pointer' onClick={()=>{navigate(`/blog/${_id}`)}}>{title}</td>
             <td>{blog_date.toDateString()}</td>
             <td>{isPublished ? 'Published' : 'Unpublished'}</td>
             <td>

@@ -17,7 +17,7 @@ const BlogCard = ({ item }) => {
                 </h2>
                 <p>{item.subTitle}</p>
                 <div className="card-actions justify-end">
-                    <div className="uppercase bg-orange-600 badge text-white">{item.category}</div>
+                    <div className="uppercase bg-teal-600 badge text-white">{item.category}</div>
                 </div>
             </div>
         </div>
