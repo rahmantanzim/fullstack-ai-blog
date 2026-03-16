@@ -29,14 +29,18 @@ const BlogSingle = ({ data }) => {
               By <span className="font-medium text-gray-700">Tanzim Rahman</span>
             </span>
             <span>•</span>
-            <span>{data.createdAt && new Date(data.createdAt).toLocaleDateString()}</span>
+            <span>{data.createdAt && new Date(data.createdAt).toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric'
+            })}</span>
           </div>
 
           {/* Tags */}
           <div className="mt-4 flex flex-wrap gap-2">
-              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">
-                {data.category}
-              </span>
+            <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">
+              {data.category}
+            </span>
           </div>
         </header>
 
@@ -50,13 +54,13 @@ const BlogSingle = ({ data }) => {
         <hr className="my-10 border-gray-200" />
 
         {/* Comment Section */}
-        <AllComments b_data={data}/>
+        <AllComments b_data={data} />
         <AddCommentForm blog={data} />
 
 
       </div>
     </div>
-    
+
   );
 };
 

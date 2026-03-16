@@ -12,7 +12,7 @@ const Subscribers = () => {
             data.success ? setEmails(data.email) : toast.error("No emails found")                          
         }
         catch (error) {
-          toast.error('ERROR: ' + error.message)
+          toast.error( error.message)
         }
   }
 

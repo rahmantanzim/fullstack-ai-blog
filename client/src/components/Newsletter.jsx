@@ -9,10 +9,10 @@ const Newsletter = () => {
         (!input) && alert("Please enter your email");
         try {
             const {data} = await axios.post('/api/newsletter/subscribe-newsletter', { email: input })
-            data.success ? toast.success(data.message) : toast.error('ERRR' + data.message);
+            data.success ? toast.success(data.message) : toast.error(data.message);
         }
         catch (e) {
-            toast.error('DATA????' + e.message);
+            toast.error(e.message);
         }
     }
     return (
