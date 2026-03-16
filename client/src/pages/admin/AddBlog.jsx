@@ -3,18 +3,34 @@ import { assets, blogCategories } from '../../assets/assets';
 import Quill from 'quill';
 import { useAppContext } from '../../context/AppContext';
 import { toast } from 'react-hot-toast';    
-
+import {parse} from 'marked';
 const AddBlog = () => {
   const { axios,fetchBlogs } = useAppContext();
   const editorRef = useRef(null);
   const quillRef = useRef(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
   // Initialized to null instead of false for file objects
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [category, setCategory] = useState('');
   const [isPublished, setIsPublished] = useState(false);
+
+    const generateAIContent = async () => {
+    if(!title) return toast.error('Please enter a title to generate content');
+    try{
+      setLoading(true);
+      const {data} = await axios.post('/api/blog/generate',{prompt: title});
+      data.success ? quillRef.current.root.innerHTML = parse(data.content) : toast.error(data.message);
+    }
+    catch(err){
+      toast.error(err.message);
+    }
+    finally{
+      setLoading(false);
+    }
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -50,9 +66,7 @@ const AddBlog = () => {
     }
   };
 
-  const generateAIContent = async () => {
-    // Placeholder for your backend API call
-  };
+
 
   useEffect(() => {
     if (!quillRef.current && editorRef.current) {
@@ -85,7 +99,7 @@ const AddBlog = () => {
 
         {/* Title */}
         <div className="flex flex-col gap-2">
-          <label htmlFor="title" className="font-medium">Blog Title</label>
+          <label htmlFor="title" className="font-medium">Blog Title/ Prompt for AI</label>
           <input
             id='title'
             name='title'
@@ -119,11 +133,12 @@ const AddBlog = () => {
             <div ref={editorRef} className="min-h-[200px] bg-white"></div>
 
             <button
+              disabled={loading}
               type="button"
               className='absolute bottom-0 right-0 text-xs font-medium text-white bg-gray-900 hover:bg-black px-4 py-2 rounded shadow-sm transition-colors cursor-pointer z-10'
               onClick={generateAIContent}
             >
-              Generate with AI
+              {loading ? 'Generating with AI...' : 'Generate with AI'}  
             </button>
           </div>
         </div>

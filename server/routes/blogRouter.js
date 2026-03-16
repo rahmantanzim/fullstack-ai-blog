@@ -1,5 +1,5 @@
 import express from 'express'
-import {addBlog, deleteBlogById, getAllBlogs, getBlogById, togglePublish,addComment, getBlogComments}  from '../controllers/blogController.js';
+import {addBlog, deleteBlogById, getAllBlogs, getBlogById, togglePublish,addComment, getBlogComments, generateContent}  from '../controllers/blogController.js';
 import upload from '../middleware/upload.js'; //middleware to parese the uploaded image before adding in db
 import auth from '../middleware/auth.js'
 //created the router
@@ -12,6 +12,7 @@ blogRouter.post('/delete',auth, deleteBlogById) // added auth middleware so that
 blogRouter.post('/toggle-publish', auth,togglePublish)
 blogRouter.post('/add-comments',addComment)
 blogRouter.post('/comments', getBlogComments)
+blogRouter.post('/generate',auth, generateContent)
 
 
 export default blogRouter;
