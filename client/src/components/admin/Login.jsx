@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Navbar from "../Navbar";
 import toast from "react-hot-toast";
 import { useAppContext } from "../../context/AppContext";
@@ -14,7 +14,7 @@ const Login = () => {
             if (data.success) {
                 setToken(data.token);
                 localStorage.setItem('token', data.token);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+                axios.defaults.headers.common['Authorization'] = `${data.token}`;
                 navigate('/admin');
             }
             else{
