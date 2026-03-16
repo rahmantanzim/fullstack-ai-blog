@@ -4,6 +4,7 @@ import cors from 'cors'
 import connectDB from './configs/db.js';
 import adminRouter from './routes/adminRoutes.js';
 import blogRouter from './routes/blogRouter.js';
+import newsletterRouter from './routes/newsletterRouter.js';
 const app = express();// creates the server named app
 
 try {
@@ -20,6 +21,7 @@ app.use(express.json()) // converts req.body from json to js object
 //routes
 app.use('/api/admin', adminRouter)
 app.use('/api/blog', blogRouter)
+app.use('/api/newsletter', newsletterRouter)
 app.get('/', (req,res)=>{
     res.send('api is working well')
 })

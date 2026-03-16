@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
-import { MdDashboard, MdPostAdd, MdArticle, MdComment } from 'react-icons/md';
+import { MdDashboard, MdPostAdd, MdArticle, MdComment, MdEmail } from 'react-icons/md';
 
 const navItems = [
   { path: '/admin', label: 'Dashboard', icon: MdDashboard, end: true },
   { path: '/admin/add-post', label: 'Add a new Post', icon: MdPostAdd },
   { path: '/admin/blog-list', label: 'List of Blogs', icon: MdArticle },
   { path: '/admin/comments', label: 'Comments', icon: MdComment },
-];
+  { path: '/admin/subscribed-emails', label: 'Subscribers', icon: MdEmail },
+]
 
 const Sidebar = () => {
   return (

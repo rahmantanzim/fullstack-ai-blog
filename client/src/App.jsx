@@ -9,6 +9,7 @@ import AllBlogs from './pages/AllBlogs'
 import 'quill/dist/quill.snow.css'
 import { Toaster } from 'react-hot-toast'
 import Comments from './pages/admin/Comments'
+import Subscribers from './pages/admin/Subscribers'
 import Login from './components/admin/Login'
 import Footer from './components/Footer';
 
@@ -29,6 +30,7 @@ const App = () => {
           <Route path='add-post' element={<AddBlog/>}/>
           <Route path='blog-list' element={<BlogList/>}/>
           <Route path='comments' element={<Comments/>}/>
+          <Route path='subscribed-emails' element={<Subscribers/>}/>
         </Route>
       </Routes>
       <Footer/>

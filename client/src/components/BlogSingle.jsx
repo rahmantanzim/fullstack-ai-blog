@@ -29,7 +29,7 @@ const BlogSingle = ({ data }) => {
               By <span className="font-medium text-gray-700">Tanzim Rahman</span>
             </span>
             <span>•</span>
-            <span>January 5, 2026</span>
+            <span>{data.createdAt && new Date(data.createdAt).toLocaleDateString()}</span>
           </div>
 
           {/* Tags */}
