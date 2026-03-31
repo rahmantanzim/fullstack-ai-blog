@@ -11,26 +11,27 @@ const navItems = [
 
 const Sidebar = () => {
   return (
-    // Changed 'flex-grow-1' to the standard Tailwind 'grow'
-    <div className='flex flex-col border-r border-gray-200 min-h-full'>
-      {navItems.map(({ path, label, icon: Icon, end }) => (
-        <NavLink
-          key={path}
-          to={path}
-          end={end}
-          className={({ isActive }) =>
-            `flex items-center p-3 md:px-9 md:min-w-64 gap-2 border-r-4 transition-colors duration-200 ${
-              isActive 
-                ? 'bg-primary/10 border-primary' 
-                : 'border-transparent hover:bg-gray-50 text-gray-600 hover:text-gray-900'
-            }`
-          }
-        >
-          <Icon className="text-xl" />
-          <p className='hidden md:inline-block'>{label}</p>
-        </NavLink>
-      ))}
-    </div>
+    <aside className='flex flex-col bg-white border-r border-gray-200 h-full w-16 md:w-64 transition-all duration-300 shrink-0'>
+      <nav className="flex flex-col py-4">
+        {navItems.map(({ path, label, icon: Icon, end }) => (
+          <NavLink
+            key={path}
+            to={path}
+            end={end}
+            className={({ isActive }) =>
+              `flex items-center justify-center md:justify-start gap-4 p-4 md:px-6 transition-all border-r-4 ${
+                isActive 
+                  ? 'bg-gray-100 border-gray-900 text-gray-900' 
+                  : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+              }`
+            }
+          >
+            <Icon className="text-2xl shrink-0" />
+            <span className='hidden md:block font-medium text-sm'>{label}</span>
+          </NavLink>
+        ))}
+      </nav>
+    </aside>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import{ useRef } from 'react'
 import { useAppContext } from '../../context/AppContext';
 const Header = () => {
     const {input,setInput} = useAppContext();
@@ -18,11 +18,11 @@ const Header = () => {
                         <p className='w-max mb-8 mx-auto bg-teal-600 text-white px-6 py-2 rounded-lg'>AI Feature integrated</p>
                     </div>
                     <div className="main-text">
-            <h2 className="text-5xl md:text-7xl font-extrabold text-base-content tracking-tight mb-6 leading-tight">
+            <h2 className="text-4xl md:text-7xl font-extrabold text-base-content tracking-tight mb-6 leading-tight">
                 The Intelligent <span className="text-primary">MERN</span> Blogging Platform
             </h2>
             
-            <p className="text-lg md:text-xl text-base-content/70 max-w-2xl mx-auto leading-relaxed mb-10">
+            <p className="px-4 text-sm md:text-xl text-base-content/70 max-w-2xl mx-auto leading-relaxed mb-10">
                 Publish faster and smarter. A full-stack blogging engine featuring an integrated AI writer, a robust admin dashboard, and a highly responsive Tailwind UI.
             </p>
         </div>
